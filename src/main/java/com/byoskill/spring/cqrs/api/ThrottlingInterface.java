@@ -6,7 +6,7 @@
  *
  * You should have received a copy of the MIT license with
  * this file. If not, please write to: sleroy at byoskill.com, or visit : www.byoskill.com
- * 
+ *
  */
 package com.byoskill.spring.cqrs.api;
 
@@ -16,8 +16,7 @@ public interface ThrottlingInterface {
     /**
      * Acquire permit.
      *
-     * @param name
-     *            the name
+     * @param name the name
      */
     void acquirePermit(String name);
 

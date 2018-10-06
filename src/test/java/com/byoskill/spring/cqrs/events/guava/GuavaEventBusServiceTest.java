@@ -21,7 +21,6 @@ import org.mockito.Mockito;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.PayloadApplicationEvent;
 
-import com.byoskill.spring.cqrs.events.guava.GuavaEventBusService;
 import com.google.common.eventbus.Subscribe;
 
 public class GuavaEventBusServiceTest {
@@ -52,7 +51,7 @@ public class GuavaEventBusServiceTest {
     public void before() {
 	applicationContext = Mockito.mock(ApplicationContext.class);
 	guavaEventBusService = new GuavaEventBusService(false);
-	guavaEventBusService.registerEventSuscriber(testEventSuscriber);
+	guavaEventBusService.registerEventSubscriber(testEventSuscriber);
 
     }
 

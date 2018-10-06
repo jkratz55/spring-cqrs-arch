@@ -15,8 +15,7 @@ public interface EventThrower<C> {
     /**
      * Event on failure.
      *
-     * @param failure
-     *            the failure
+     * @param failure the failure
      * @return the event that should be thrown (null does not send event)
      */
     Object eventOnFailure(Throwable failure);
@@ -24,8 +23,7 @@ public interface EventThrower<C> {
     /**
      * Event on success.
      *
-     * @param result
-     *            the result
+     * @param result the result
      * @return the event that should be thrown (null does not send event)
      */
     Object eventOnSuccess(C result);

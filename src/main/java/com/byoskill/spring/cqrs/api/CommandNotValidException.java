@@ -10,11 +10,10 @@
  */
 package com.byoskill.spring.cqrs.api;
 
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * The Class CommandNotValidException is thrown when an invalid command has been
@@ -23,38 +22,35 @@ import javax.validation.ConstraintViolationException;
 public class CommandNotValidException extends ConstraintViolationException {
 
     private static String toString(final Set<? extends ConstraintViolation<?>> constraintViolations) {
-	return constraintViolations.stream()
-		.map(cv -> cv == null ? "null" : cv.getPropertyPath() + ": " + cv.getMessage())
-		.collect(Collectors.joining("\n"));
+        return constraintViolations.stream()
+                .map(cv -> cv == null ? "null" : cv.getPropertyPath() + ": " + cv.getMessage())
+                .collect(Collectors.joining("\n"));
     }
 
     /**
      * Instantiates a new command not valid exception.
      *
-     * @param constraintViolations
-     *            the constraint violations
+     * @param constraintViolations the constraint violations
      */
     public CommandNotValidException(final Set<? extends ConstraintViolation<?>> constraintViolations) {
-	super(constraintViolations);
+        super(constraintViolations);
     }
 
     /**
      * Instantiates a new command not valid exception.
      *
-     * @param message
-     *            the message
-     * @param constraintViolations
-     *            the constraint violations
+     * @param message              the message
+     * @param constraintViolations the constraint violations
      */
     public CommandNotValidException(final String message,
-	    final Set<? extends ConstraintViolation<?>> constraintViolations) {
-	super(message + "\nFailed validations : \n" + toString(constraintViolations), constraintViolations);
+                                    final Set<? extends ConstraintViolation<?>> constraintViolations) {
+        super(message + "\nFailed validations : \n" + toString(constraintViolations), constraintViolations);
 
     }
 
     @Override
     public String toString() {
-	return "CommandNotValidException [getConstraintViolations()=" + getConstraintViolations() + ", getMessage()="
-		+ getMessage() + "]";
+        return "CommandNotValidException [getConstraintViolations()=" + getConstraintViolations() + ", getMessage()="
+                + getMessage() + "]";
     }
 }

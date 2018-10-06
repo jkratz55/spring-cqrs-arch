@@ -11,14 +11,6 @@
 
 package com.byoskill.spring.cqrs.executors.tracing;
 
-import java.io.IOException;
-
-import javax.annotation.PreDestroy;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.byoskill.spring.cqrs.api.TraceConfiguration;
 import com.byoskill.spring.cqrs.executors.api.CommandExecutionContext;
 import com.byoskill.spring.cqrs.executors.api.CommandRunner;
@@ -27,39 +19,51 @@ import com.byoskill.spring.cqrs.gate.impl.TraceCommandExecution;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.annotation.PreDestroy;
+import java.io.IOException;
 
 /**
  * This command listener provides a facility to log and serialize every actions
  * executed by the Gate in order to replay them in tests.
  *
  * @author sleroy
- *
  */
 public class CommandTraceRunner implements CommandRunner {
 
-    /** The Constant LOGGER. */
+    /**
+     * The Constant LOGGER.
+     */
     private static final Logger LOGGER = LoggerFactory.getLogger(CommandTraceRunner.class);
 
-    /** The command trace. */
+    /**
+     * The command trace.
+     */
     private CommandTrace commandTrace = new CommandTrace();
 
-    /** The configuration. */
+    /**
+     * The configuration.
+     */
 
     private final TraceConfiguration traceConfiguration;
 
-    /** The object mapper. */
+    /**
+     * The object mapper.
+     */
     private ObjectMapper objectMapper;
 
     /**
      * Instantiates a new command trace serialization service.
      *
-     * @param traceConfiguration
-     *            the cqrs configuration
+     * @param traceConfiguration the cqrs configuration
      */
     @Autowired
     public CommandTraceRunner(final TraceConfiguration traceConfiguration) {
-	this.traceConfiguration = traceConfiguration;
-	init();
+        this.traceConfiguration = traceConfiguration;
+        init();
 
     }
 
@@ -73,36 +77,33 @@ public class CommandTraceRunner implements CommandRunner {
      */
     @Override
     public Object execute(final CommandExecutionContext context, final CommandRunnerChain chain)
-	    throws RuntimeException {
-	Object result = null;
-	try {
-	    result = chain.execute(context);
+            throws RuntimeException {
+        Object result = null;
+        try {
+            result = chain.execute(context);
 
-	    if (traceConfiguration.isTracingEnabled()) {
-		serializeTrace(TraceCommandExecution.success(context.getRawCommand(), result));
-	    }
-	} catch (final Exception t) {
-	    if (traceConfiguration.isTracingEnabled()) {
-		serializeTrace(TraceCommandExecution.failure(context.getRawCommand(), t));
-	    }
-	    throw t;
-	}
-	return result;
+            if (traceConfiguration.isTracingEnabled()) {
+                serializeTrace(TraceCommandExecution.success(context.getRawCommand(), result));
+            }
+        } catch (final Exception t) {
+            if (traceConfiguration.isTracingEnabled()) {
+                serializeTrace(TraceCommandExecution.failure(context.getRawCommand(), t));
+            }
+            throw t;
+        }
+        return result;
     }
 
     /**
      * Flush file.
      *
-     * @throws JsonGenerationException
-     *             the json generation exception
-     * @throws JsonMappingException
-     *             the json mapping exception
-     * @throws IOException
-     *             Signals that an I/O exception has occurred.
+     * @throws JsonGenerationException the json generation exception
+     * @throws JsonMappingException    the json mapping exception
+     * @throws IOException             Signals that an I/O exception has occurred.
      */
     public synchronized void flushFile() throws Exception {
-	objectMapper.writeValue(traceConfiguration.getTraceFile(), commandTrace);
-	commandTrace = new CommandTrace();
+        objectMapper.writeValue(traceConfiguration.getTraceFile(), commandTrace);
+        commandTrace = new CommandTrace();
     }
 
     /**
@@ -111,7 +112,7 @@ public class CommandTraceRunner implements CommandRunner {
      * @return true, if successful
      */
     public boolean hasTraces() {
-	return !commandTrace.commands.isEmpty();
+        return !commandTrace.commands.isEmpty();
     }
 
     /**
@@ -119,13 +120,13 @@ public class CommandTraceRunner implements CommandRunner {
      */
     @PreDestroy
     public void shutdown() {
-	try {
-	    flushFile();
-	} catch (final Exception e) {
-	    LOGGER.error("Error during the serialization of the command trace {} -> {}",
-		    traceConfiguration.getTraceFile(),
-		    e);
-	}
+        try {
+            flushFile();
+        } catch (final Exception e) {
+            LOGGER.error("Error during the serialization of the command trace {} -> {}",
+                    traceConfiguration.getTraceFile(),
+                    e);
+        }
 
     }
 
@@ -133,33 +134,32 @@ public class CommandTraceRunner implements CommandRunner {
      * Inits the.
      */
     private final void init() {
-	objectMapper = new ObjectMapper();
-	try {
-	    if (traceConfiguration.getTraceFile().createNewFile()) {
-		final CommandTrace trace = new CommandTrace();
-		objectMapper.writeValue(traceConfiguration.getTraceFile(), trace);
-	    }
-	} catch (final IOException e) {
-	    LOGGER.error("Could not create the trace, already existing -> {}", e);
-	}
+        objectMapper = new ObjectMapper();
+        try {
+            if (traceConfiguration.getTraceFile().createNewFile()) {
+                final CommandTrace trace = new CommandTrace();
+                objectMapper.writeValue(traceConfiguration.getTraceFile(), trace);
+            }
+        } catch (final IOException e) {
+            LOGGER.error("Could not create the trace, already existing -> {}", e);
+        }
     }
 
     /**
      * Serialize trace.
      *
-     * @param _command
-     *            the command
+     * @param _command the command
      */
     private synchronized void serializeTrace(final TraceCommandExecution _command) {
-	try {
-	    commandTrace.addCommand(_command);
-	    if (commandTrace.getCommands().size() >= traceConfiguration.getTraceSize()) {
-		flushFile();
-	    }
-	} catch (final Exception e) {
-	    LOGGER.error("Error during the serialization of the command {} -> {}", traceConfiguration.getTraceFile(),
-		    _command, e);
-	}
+        try {
+            commandTrace.addCommand(_command);
+            if (commandTrace.getCommands().size() >= traceConfiguration.getTraceSize()) {
+                flushFile();
+            }
+        } catch (final Exception e) {
+            LOGGER.error("Error during the serialization of the command {} -> {}", traceConfiguration.getTraceFile(),
+                    _command, e);
+        }
     }
 
 }

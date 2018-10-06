@@ -26,10 +26,9 @@ public interface EventBusService {
      * If the specified {@code event} is not an {@link ApplicationEvent}, it is
      * wrapped in a {@link PayloadApplicationEvent}.
      *
-     * @param event
-     *            the event to publish
-     * @since 4.2
+     * @param event the event to publish
      * @see PayloadApplicationEvent
+     * @since 4.2
      */
     void publishEvent(Object event);
 

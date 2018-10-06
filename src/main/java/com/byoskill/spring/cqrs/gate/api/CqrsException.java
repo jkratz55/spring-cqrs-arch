@@ -8,7 +8,6 @@ package com.byoskill.spring.cqrs.gate.api;
  * dao, services)
  *
  * @author sleroy
- *
  */
 public class CqrsException extends RuntimeException {
 
@@ -18,7 +17,7 @@ public class CqrsException extends RuntimeException {
      * Domain exception.
      */
     public CqrsException() {
-	this("");
+        this("");
     }
 
     /**
@@ -27,21 +26,21 @@ public class CqrsException extends RuntimeException {
      * @param _message the message
      */
     public CqrsException(final String _message) {
-	this(_message, null);
+        this(_message, null);
     }
 
     /**
      * Instantiates a new cqrs exception.
      *
      * @param _message the message
-     * @param _cause the cause
+     * @param _cause   the cause
      */
     public CqrsException(final String _message, final Throwable _cause) {
-	super(DOMAIN_EXCEPTION + _message, _cause);
+        super(DOMAIN_EXCEPTION + _message, _cause);
     }
 
     public CqrsException(final Throwable cause) {
-	this(cause.getMessage(), cause);
+        this(cause.getMessage(), cause);
     }
 
 }

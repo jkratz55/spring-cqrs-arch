@@ -10,11 +10,10 @@
  */
 package com.byoskill.spring.cqrs.events.guava;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
-import javax.annotation.PreDestroy;
-
+import com.byoskill.spring.cqrs.annotations.EventHandler;
+import com.byoskill.spring.cqrs.gate.api.EventBusService;
+import com.google.common.eventbus.AsyncEventBus;
+import com.google.common.eventbus.EventBus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -22,24 +21,22 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.annotation.AnnotationUtils;
 
-import com.byoskill.spring.cqrs.annotations.EventHandler;
-import com.byoskill.spring.cqrs.gate.api.EventBusService;
-import com.google.common.eventbus.AsyncEventBus;
-import com.google.common.eventbus.EventBus;
+import javax.annotation.PreDestroy;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class GuavaEventBusService implements BeanPostProcessor, EventBusService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GuavaEventBusService.class);
-    private ApplicationContext  applicationContext;
-    private EventBus            eventBus;
+    private ApplicationContext applicationContext;
+    private EventBus eventBus;
 
     private ExecutorService threadPoolTaskExecutor;
 
     /**
      * Instantiates a new guava event bus service.
      *
-     * @param asyncExecution
-     *            the async execution
+     * @param asyncExecution the async execution
      */
     public GuavaEventBusService(final boolean asyncExecution) {
         if (asyncExecution) {
@@ -63,7 +60,7 @@ public class GuavaEventBusService implements BeanPostProcessor, EventBusService 
     @Override
     public Object postProcessAfterInitialization(final Object bean, final String beanName) throws BeansException {
         if (AnnotationUtils.findAnnotation(bean.getClass(), EventHandler.class) != null) {
-            registerEventSuscriber(bean);
+            registerEventSubscriber(bean);
         }
         return bean;
     }
@@ -89,10 +86,9 @@ public class GuavaEventBusService implements BeanPostProcessor, EventBusService 
     /**
      * Register event suscriber.
      *
-     * @param bean
-     *            the bean
+     * @param bean the bean
      */
-    public void registerEventSuscriber(final Object bean) {
+    public void registerEventSubscriber(final Object bean) {
         eventBus.register(bean);
     }
 

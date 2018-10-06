@@ -18,20 +18,20 @@ public class TraceCommandExecution {
 
     public static TraceCommandExecution failure(final Object command, final Throwable executionResult) {
 
-	final TraceCommandExecution traceCommandExecution = new TraceCommandExecution();
-	traceCommandExecution.command = command;
-	traceCommandExecution.result = executionResult;
-	traceCommandExecution.executionStatus = ExecutionStatus.FAILURE;
-	return traceCommandExecution;
+        final TraceCommandExecution traceCommandExecution = new TraceCommandExecution();
+        traceCommandExecution.command = command;
+        traceCommandExecution.result = executionResult;
+        traceCommandExecution.executionStatus = ExecutionStatus.FAILURE;
+        return traceCommandExecution;
     }
 
     public static TraceCommandExecution success(final Object command, final Object executionResult) {
 
-	final TraceCommandExecution traceCommandExecution = new TraceCommandExecution();
-	traceCommandExecution.command = command;
-	traceCommandExecution.result = executionResult;
-	traceCommandExecution.executionStatus = ExecutionStatus.SUCCESS;
-	return traceCommandExecution;
+        final TraceCommandExecution traceCommandExecution = new TraceCommandExecution();
+        traceCommandExecution.command = command;
+        traceCommandExecution.result = executionResult;
+        traceCommandExecution.executionStatus = ExecutionStatus.SUCCESS;
+        return traceCommandExecution;
     }
 
     private Object command;
@@ -43,39 +43,39 @@ public class TraceCommandExecution {
     private Object result;
 
     public TraceCommandExecution() {
-	super();
+        super();
     }
 
     public Object getCommand() {
-	return command;
+        return command;
     }
 
     public ExecutionStatus getExecutionStatus() {
-	return executionStatus;
+        return executionStatus;
     }
 
     public Throwable getReason() {
-	return reason;
+        return reason;
     }
 
     public Object getResult() {
-	return result;
+        return result;
     }
 
     public void setCommand(final Object command) {
-	this.command = command;
+        this.command = command;
     }
 
     public void setExecutionStatus(final ExecutionStatus executionStatus) {
-	this.executionStatus = executionStatus;
+        this.executionStatus = executionStatus;
     }
 
     public void setReason(final Throwable reason) {
-	this.reason = reason;
+        this.reason = reason;
     }
 
     public void setResult(final Object result) {
-	this.result = result;
+        this.result = result;
     }
 
 }

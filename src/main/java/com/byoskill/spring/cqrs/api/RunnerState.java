@@ -20,10 +20,8 @@ public interface RunnerState {
     /**
      * Gets the data.
      *
-     * @param <T>
-     *            the generic type
-     * @param key
-     *            the key
+     * @param <T> the generic type
+     * @param key the key
      * @return the data
      */
     <T> T getData(String key);
@@ -31,10 +29,8 @@ public interface RunnerState {
     /**
      * Sets the data.
      *
-     * @param key
-     *            the key
-     * @param value
-     *            the value
+     * @param key   the key
+     * @param value the value
      */
     void setData(String key, Object value);
 }

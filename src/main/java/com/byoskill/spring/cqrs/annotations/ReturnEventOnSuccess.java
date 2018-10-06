@@ -13,12 +13,12 @@
  */
 package com.byoskill.spring.cqrs.annotations;
 
+import org.springframework.stereotype.Component;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-
-import org.springframework.stereotype.Component;
 
 /**
  * The annotation indicates that a command will return an event on the success

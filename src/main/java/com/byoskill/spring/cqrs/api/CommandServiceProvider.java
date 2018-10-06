@@ -18,8 +18,7 @@ public interface CommandServiceProvider {
     /**
      * Gets the service associated to this command.
      *
-     * @param command
-     *            the command
+     * @param command the command
      * @return the command runner
      */
     public CommandServiceSpec getService(final Object command);
@@ -28,10 +27,8 @@ public interface CommandServiceProvider {
      * Put a command. It's relation is analyzed using the CommandServiceSpec
      * interface.
      *
-     * @param bean
-     *            the bean
-     * @param beanName
-     *            the bean name
+     * @param bean     the bean
+     * @param beanName the bean name
      */
     public void putCommand(Object bean, String beanName);
 }
