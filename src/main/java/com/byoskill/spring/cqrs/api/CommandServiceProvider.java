@@ -21,7 +21,7 @@ public interface CommandServiceProvider {
      * @param command the command
      * @return the command runner
      */
-    public CommandServiceSpec getService(final Object command);
+    CommandServiceSpec getService(final Object command);
 
     /**
      * Put a command. It's relation is analyzed using the CommandServiceSpec
@@ -30,5 +30,5 @@ public interface CommandServiceProvider {
      * @param bean     the bean
      * @param beanName the bean name
      */
-    public void putCommand(Object bean, String beanName);
+    void putCommand(Object bean, String beanName);
 }

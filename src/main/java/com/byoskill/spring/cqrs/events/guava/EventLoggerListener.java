@@ -30,7 +30,6 @@ public class EventLoggerListener {
      */
     @Autowired
     public EventLoggerListener(final LoggingConfiguration configuration) {
-        super();
         this.configuration = configuration;
     }
 

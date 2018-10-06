@@ -23,14 +23,14 @@ public interface CqrsConfiguration {
      *
      * @return the fork join pool for async execution
      */
-    public ForkJoinPool getForkJoinPool();
+    ForkJoinPool getForkJoinPool();
 
     /**
      * Gets the logging configuration.
      *
      * @return the logging configuration
      */
-    public LoggingConfiguration getLoggingConfiguration();
+    LoggingConfiguration getLoggingConfiguration();
 
     /**
      * Returns a throttling interface. The default behaviour is simply ignoring the
@@ -38,13 +38,12 @@ public interface CqrsConfiguration {
      *
      * @return the i throttling interface
      */
-    public ThrottlingInterface getThrottlingInterface();
+    ThrottlingInterface getThrottlingInterface();
 
     /**
      * Gets the trace configuration.
      *
      * @return the trace configuration
      */
-    public TraceConfiguration getTraceConfiguration();
-
+    TraceConfiguration getTraceConfiguration();
 }

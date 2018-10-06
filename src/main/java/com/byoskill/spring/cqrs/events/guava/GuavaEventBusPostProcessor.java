@@ -34,8 +34,6 @@ public class GuavaEventBusPostProcessor implements BeanPostProcessor {
     }
 
     /*
-     *
-     *
      * (non-Javadoc)
      *
      * @see org.springframework.beans.factory.config.BeanPostProcessor#

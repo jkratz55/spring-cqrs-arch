@@ -52,7 +52,7 @@ def pomConfig = {
     }
     
     scm {
-       url "https://github.com/spring-cqrs-arch"
+       url "https://github.com/jkratz55/spring-cqrs-arch"
     }
 }
 
@@ -66,14 +66,14 @@ publishing {
             artifact javadocJar {
                 classifier "javadoc"
             }
-            groupId 'com.byoskill.spring.cqrs'
+            groupId 'io.jkratz.spring.cqrs'
             artifactId 'spring-cqrs-module'
             version project.version
             pom.withXml {
                 def root = asNode()
                 root.appendNode('description', 'CQRS Module for Spring')
                 root.appendNode('name', 'spring-cqrs-module')
-                root.appendNode('url', 'https://sylvainleroy.com')
+                root.appendNode('url', 'https://github.com/jkratz55/spring-cqrs-arch')
                 root.children().last() + pomConfig
             }
         }
