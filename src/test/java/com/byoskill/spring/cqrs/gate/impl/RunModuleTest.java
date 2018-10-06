@@ -10,12 +10,12 @@
  */
 package com.byoskill.spring.cqrs.gate.impl;
 
-import java.util.Properties;
-import java.util.concurrent.CompletionException;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
-
+import com.byoskill.spring.cqrs.gate.api.CommandHandlerNotFoundException;
+import com.byoskill.spring.cqrs.gate.api.Gate;
+import com.byoskill.spring.cqrs.gate.conf.ImportCqrsInjectionConfiguration;
+import com.byoskill.spring.cqrs.gate.conf.ImportDefaultCqrsConfiguration;
+import com.byoskill.spring.cqrs.gate.conf.ImportGuavaAsyncEventBusConfiguration;
+import com.byoskill.spring.cqrs.gate.impl.fakeapp.TestConfiguration;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,16 +23,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.byoskill.spring.cqrs.gate.api.CommandHandlerNotFoundException;
-import com.byoskill.spring.cqrs.gate.api.Gate;
-import com.byoskill.spring.cqrs.gate.conf.ImportCqrsInjectionConfiguration;
-import com.byoskill.spring.cqrs.gate.conf.ImportDefaultCqrsConfiguration;
-import com.byoskill.spring.cqrs.gate.conf.ImportGuavaAsyncEventBusConfiguration;
-import com.byoskill.spring.cqrs.gate.impl.fakeapp.TestConfiguration;
+import java.util.Properties;
+import java.util.concurrent.CompletionException;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = { TestConfiguration.class, ImportDefaultCqrsConfiguration.class,
-	ImportGuavaAsyncEventBusConfiguration.class, ImportCqrsInjectionConfiguration.class, CommandServicePostProcessor.class })
+@ContextConfiguration(classes = {TestConfiguration.class, ImportDefaultCqrsConfiguration.class,
+        ImportGuavaAsyncEventBusConfiguration.class, ImportCqrsInjectionConfiguration.class, CommandServicePostProcessor.class})
 public class RunModuleTest {
 
     @Autowired
@@ -40,35 +39,35 @@ public class RunModuleTest {
 
     @Test
     public void test_happyPath() throws InterruptedException, ExecutionException, TimeoutException {
-	springGate.dispatch("A");
-	springGate.dispatch("B");
-	springGate.dispatch("C");
-	Assert.assertEquals(4, springGate.dispatchAsync("D").get(3, TimeUnit.SECONDS));
+        springGate.dispatch("A");
+        springGate.dispatch("B");
+        springGate.dispatch("C");
+        Assert.assertEquals(4, springGate.dispatchAsync("D").get(3, TimeUnit.SECONDS));
 
     }
 
     @Test(expected = CommandHandlerNotFoundException.class)
     public void testCommandNotFound() {
 
-	springGate.dispatch(12);
+        springGate.dispatch(12);
     }
 
     @Test(expected = CompletionException.class)
     public void testInvalidation() {
-	springGate.dispatch(new DummyObject());
+        springGate.dispatch(new DummyObject());
     }
 
     @Test()
     public void testInvalidation_Success() {
-	final DummyObject command = new DummyObject();
-	command.field = "OK";
-	springGate.dispatch(command);
+        final DummyObject command = new DummyObject();
+        command.field = "OK";
+        springGate.dispatch(command);
     }
 
     @Test(expected = CommandHandlerNotFoundException.class)
     public void testPromised_onFailure() throws InterruptedException, ExecutionException {
-	springGate.dispatchAsync(new Properties()).join();
-	Thread.sleep(5000);
+        springGate.dispatchAsync(new Properties()).join();
+        Thread.sleep(5000);
     }
 
 }

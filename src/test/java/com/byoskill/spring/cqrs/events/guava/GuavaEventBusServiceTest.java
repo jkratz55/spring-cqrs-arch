@@ -10,9 +10,7 @@
  */
 package com.byoskill.spring.cqrs.events.guava;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.google.common.eventbus.Subscribe;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -21,18 +19,19 @@ import org.mockito.Mockito;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.PayloadApplicationEvent;
 
-import com.google.common.eventbus.Subscribe;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GuavaEventBusServiceTest {
 
     public static class TestEventSuscriber {
 
-	public List<Object> events = new ArrayList<>();
+        public List<Object> events = new ArrayList<>();
 
-	@Subscribe
-	public void suscribe(final Object event) {
-	    events.add(event);
-	}
+        @Subscribe
+        public void suscribe(final Object event) {
+            events.add(event);
+        }
 
     }
 
@@ -44,27 +43,27 @@ public class GuavaEventBusServiceTest {
 
     @After
     public void after() {
-	guavaEventBusService.destroy();
+        guavaEventBusService.destroy();
     }
 
     @Before
     public void before() {
-	applicationContext = Mockito.mock(ApplicationContext.class);
-	guavaEventBusService = new GuavaEventBusService(false);
-	guavaEventBusService.registerEventSubscriber(testEventSuscriber);
+        applicationContext = Mockito.mock(ApplicationContext.class);
+        guavaEventBusService = new GuavaEventBusService(false);
+        guavaEventBusService.registerEventSubscriber(testEventSuscriber);
 
     }
 
     @Test
     public final void testPublishEventApplicationEvent() {
-	guavaEventBusService.publishEvent(new PayloadApplicationEvent(this, "EVENT1"));
-	Assert.assertEquals(testEventSuscriber.events.size(), 1);
+        guavaEventBusService.publishEvent(new PayloadApplicationEvent(this, "EVENT1"));
+        Assert.assertEquals(testEventSuscriber.events.size(), 1);
     }
 
     @Test
     public final void testPublishEventObject() {
-	guavaEventBusService.publishEvent("EVENT1");
-	Assert.assertEquals(testEventSuscriber.events.size(), 1);
+        guavaEventBusService.publishEvent("EVENT1");
+        Assert.assertEquals(testEventSuscriber.events.size(), 1);
 
     }
 

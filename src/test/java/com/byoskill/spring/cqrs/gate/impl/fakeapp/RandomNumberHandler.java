@@ -10,12 +10,11 @@
  */
 package com.byoskill.spring.cqrs.gate.impl.fakeapp;
 
-import java.util.Random;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.byoskill.spring.cqrs.api.CommandServiceSpec;
 import com.byoskill.spring.cqrs.gate.api.Gate;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Random;
 
 public class RandomNumberHandler implements CommandServiceSpec<RandomNumber, Integer> {
 
@@ -23,14 +22,14 @@ public class RandomNumberHandler implements CommandServiceSpec<RandomNumber, Int
 
     @Autowired
     public RandomNumberHandler(final Gate gate) {
-	super();
-	random = new Random();
+        super();
+        random = new Random();
 
     }
 
     @Override
     public Integer handle(final RandomNumber command) {
-	return random.nextInt();
+        return random.nextInt();
     }
 
 }

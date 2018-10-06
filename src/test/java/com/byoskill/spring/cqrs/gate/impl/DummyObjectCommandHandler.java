@@ -5,9 +5,9 @@ import com.byoskill.spring.cqrs.api.CommandServiceSpec;
 public class DummyObjectCommandHandler implements CommandServiceSpec<DummyObject, Integer> {
 
     @Override
-    public Integer handle(final DummyObject command)  {
+    public Integer handle(final DummyObject command) {
 
-	return 1;
+        return 1;
     }
 
 }

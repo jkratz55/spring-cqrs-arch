@@ -29,7 +29,6 @@ public class CommandProfilingRunner implements CommandRunner {
 
     @Autowired
     public CommandProfilingRunner(final LoggingConfiguration configuration) {
-        super();
         this.configuration = configuration;
     }
 

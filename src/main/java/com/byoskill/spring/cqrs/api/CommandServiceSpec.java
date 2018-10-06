@@ -35,5 +35,5 @@ public interface CommandServiceSpec<C, R> {
      * @return the returned value
      * @throws RuntimeException the runtime exception
      */
-    public R handle(C command) throws RuntimeException;
+    R handle(C command) throws RuntimeException;
 }

@@ -6,7 +6,7 @@ public class BrokenObjectCommandHandler implements CommandServiceSpec<DummyObjec
 
     @Override
     public Integer handle(final DummyObject2 command) {
-	throw new RuntimeException();
+        throw new RuntimeException();
     }
 
 }

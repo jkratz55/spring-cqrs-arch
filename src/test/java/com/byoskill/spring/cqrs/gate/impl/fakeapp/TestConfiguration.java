@@ -10,40 +10,39 @@
  */
 package com.byoskill.spring.cqrs.gate.impl.fakeapp;
 
-import javax.validation.Validation;
-import javax.validation.Validator;
-
+import com.byoskill.spring.cqrs.gate.api.Gate;
+import com.byoskill.spring.cqrs.gate.impl.DummyObjectCommandHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.byoskill.spring.cqrs.gate.api.Gate;
-import com.byoskill.spring.cqrs.gate.impl.DummyObjectCommandHandler;
+import javax.validation.Validation;
+import javax.validation.Validator;
 
 @Configuration
 public class TestConfiguration {
     @Bean
     public DummyObjectCommandHandler dummyValidationHandler(final Gate gate) {
-	return new DummyObjectCommandHandler();
+        return new DummyObjectCommandHandler();
     }
 
     @Bean
     public StringCommandHandler exampleHandler(final Gate gate) {
-	return new StringCommandHandler(gate);
+        return new StringCommandHandler(gate);
     }
 
     @Bean
     public RandomErrorNumberHandler randomErrorHandler(final Gate gate) {
-	return new RandomErrorNumberHandler(gate);
+        return new RandomErrorNumberHandler(gate);
     }
 
     @Bean
     public RandomNumberHandler randomHandler(final Gate gate) {
-	return new RandomNumberHandler(gate);
+        return new RandomNumberHandler(gate);
     }
 
     @Bean
     Validator validator() {
-	return Validation.buildDefaultValidatorFactory().getValidator();
+        return Validation.buildDefaultValidatorFactory().getValidator();
     }
 
 }

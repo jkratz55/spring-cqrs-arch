@@ -33,7 +33,7 @@ public interface Gate {
      * @param command            the command.
      * @return the result of the command.
      */
-    public <R> R dispatch(Object command);
+    <R> R dispatch(Object command);
 
     /**
      * Dispatch a command and executes it sequentially.
@@ -43,7 +43,7 @@ public interface Gate {
      * @param returnType the expected return type
      * @return the result of the command.
      */
-    public <R> R dispatch(Object command, Class<R> returnType);
+    <R> R dispatch(Object command, Class<R> returnType);
 
     /**
      * Dispatch a list of command asynchronously.
@@ -53,7 +53,7 @@ public interface Gate {
      * @param expectedReturnType the expected return type
      * @return the result of the command.
      */
-    public <R> List<R> dispatchAll(List<?> commands, Class<R> expectedReturnType);
+    <R> List<R> dispatchAll(List<?> commands, Class<R> expectedReturnType);
 
 
     /**
@@ -63,7 +63,7 @@ public interface Gate {
      * @param command            the command.
      * @return the result of the command.
      */
-    public <R> CompletableFuture<R> dispatchAsync(Object command);
+    <R> CompletableFuture<R> dispatchAsync(Object command);
 
     /**
      * Dispatch a command and executes it asynchronously.
@@ -73,7 +73,7 @@ public interface Gate {
      * @param expectedReturnType the expected return type
      * @return the result of the command.
      */
-    public <R> CompletableFuture<R> dispatchAsync(Object command, Class<R> expectedReturnType);
+    <R> CompletableFuture<R> dispatchAsync(Object command, Class<R> expectedReturnType);
 
     /**
      * Dispatches an event and executes it asynchronously.
@@ -81,5 +81,5 @@ public interface Gate {
      * @param _event
      *            the event.
      */
-    public void dispatchEvent(Object _event);
+    void dispatchEvent(Object _event);
 }

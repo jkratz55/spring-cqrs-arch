@@ -40,7 +40,6 @@ public class DefaultCommandRunner implements CommandRunner {
      * @param commandServiceHandler the command service handler
      */
     public DefaultCommandRunner(final CommandServiceSpec<?, ?> commandServiceHandler) {
-        super();
         this.commandServiceHandler = commandServiceHandler;
     }
 
@@ -53,6 +52,7 @@ public class DefaultCommandRunner implements CommandRunner {
      * com.byoskill.spring.cqrs.executors.api.CommandRunnerChain)
      */
     @Override
+    @SuppressWarnings("unchecked")
     public Object execute(final CommandExecutionContext context, final CommandRunnerChain chain)
             throws RuntimeException {
         Validate.isTrue(chain == null);
